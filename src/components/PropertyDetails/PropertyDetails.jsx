@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import BaseURL from "../services/api";
+import BASE_URL, {APP_ID} from "../../services/api";
+import styles from "./propertydetails.module.css";
 
 const fetchPropertyDetails = async (id) => {
   const { data } = await axios.get(
-    `${BaseURL}/search/stays/${id}`,
+    `${BASE_URL}/search/stays/${id}`,
     {
-      headers: { "x-app-id": "3a2f3e5b-4a89-4fcb-a7e1-31421c7a6344" },
+      headers: { "x-app-id": APP_ID },
     }
   );
-  console.log(data);
   return data;
 };
 
@@ -28,11 +28,7 @@ const PropertyDetails = ({ propertyId }) => {
       <h2>Property Details</h2>
 
       <div
-        style={{
-          padding: "20px",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-        }}
+        className={styles.property}
       >
         <h1>{data?.data.name}</h1>
         <p>{data?.data.description}</p>
@@ -77,15 +73,13 @@ const PropertyDetails = ({ propertyId }) => {
       {data?.data.reviews.length > 0 ? (
         <ul>
           {data?.data.reviews.map((review, index) => (
-            <li key={index}>{review.content}</li> 
+            <li key={index}>{review.content}</li>
           ))}
         </ul>
       ) : (
         <p>No reviews available</p>
       )}
       </div>
-
-      {/* <pre>{JSON.stringify(data?.data, null, 2)}</pre> */}
     </div>
   );
 };

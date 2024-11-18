@@ -1,6 +1,6 @@
-import './App.css'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import PropertyList from './components/PropertyList'
+import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import PropertyList from './components/PropertyList/PropertyList';
 
 function App() {
 

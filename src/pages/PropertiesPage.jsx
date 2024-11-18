@@ -1,4 +1,4 @@
-import PropertyDetails from "../components/PropertyDetails";
+import PropertyDetails from "../components/PropertyDetails/PropertyDetails";
 
 const PropertiesPage = () => {
   return <PropertyDetails />;
