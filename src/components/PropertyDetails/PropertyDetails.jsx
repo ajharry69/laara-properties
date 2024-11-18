@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import BASE_URL, {APP_ID} from "../../services/api";
 import styles from "./propertydetails.module.css";
+import {Link, useParams} from "react-router-dom";
 
 const fetchPropertyDetails = async (id) => {
   const { data } = await axios.get(
@@ -13,11 +14,13 @@ const fetchPropertyDetails = async (id) => {
   return data;
 };
 
-const PropertyDetails = ({ propertyId }) => {
+const PropertyDetails = ()=> {
+  const {id} = useParams()
+
   const { data, error, isLoading } = useQuery({
-    queryKey: ["propertyDetails", propertyId],
-    queryFn: () => fetchPropertyDetails(propertyId),
-    enabled: !!propertyId,
+    queryKey: ["propertyDetails", id],
+    queryFn: () => fetchPropertyDetails(id),
+    enabled: !!id,
   });
 
   if (isLoading) return <div>Loading details...</div>;
@@ -26,6 +29,7 @@ const PropertyDetails = ({ propertyId }) => {
   return (
     <div>
       <h2>Property Details</h2>
+      <Link to={'/'} >Go Back</Link>
 
       <div
         className={styles.property}

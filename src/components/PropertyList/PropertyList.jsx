@@ -1,15 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import PropertyDetails from "../PropertyDetails/PropertyDetails";
-import { useState } from "react";
+import {useState} from "react";
 import BASE_URL, {APP_ID} from "../../services/api";
 import styles from "./propertylist.module.css";
+import {Link} from "react-router-dom";
 
 const fetchProperties = async () => {
-  const { data } = await axios.get(
+  const {data} = await axios.get(
     `${BASE_URL}/search/stays/filtered`,
     {
-      headers: { "x-app-id": APP_ID },
+      headers: {"x-app-id": APP_ID},
     }
   );
   return data;
@@ -27,8 +28,13 @@ const PropertyList = () => {
 
   const [selectedProperty, setSelectedProperty] = useState(null);
 
-  if (isLoading) return <div>Loading properties...</div>;
-  if (error) return <div>Error loading properties: {error.message}</div>;
+  if (isLoading) {
+    return <div>Loading properties...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading properties: {error.message}</div>;
+  }
 
   return (
     <div>
@@ -40,7 +46,6 @@ const PropertyList = () => {
           <div
             key={property.id}
             className={styles.property_list_item}
-            onClick={() => setSelectedProperty(property.id)}
           >
             <img
               src={
@@ -60,16 +65,10 @@ const PropertyList = () => {
               <strong>Reviews:</strong>{" "}
               {property._count.reviews || "No reviews yet"}
             </p>
+            <Link to={`/properties/${property.id}`}> View Property </Link>
           </div>
         ))}
       </div>
-
-      {selectedProperty && (
-        <div className={styles.property_list_details}>
-          <h2>Selected Property Details</h2>
-          <PropertyDetails propertyId={selectedProperty} />
-        </div>
-      )}
     </div>
   );
 };
